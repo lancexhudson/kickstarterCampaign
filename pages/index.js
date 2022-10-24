@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Card } from 'semantic-ui-react';
 import factory from '../ethereum/factory';
 
 // export default () => {
@@ -6,15 +7,28 @@ import factory from '../ethereum/factory';
 // }; //functional component
 
 class CampaignIndex extends Component {
-async componentDieMount() {
-    const campaigns = await factory.methods.getDeployedCampaigns().call();
-    //retrieves array of campaigns
 
-    console.log(campaigns);
+static async getInitialProps() {
+    const campaigns = await factory.methods.getDeployedCampaigns().call();
+    return { campaigns };
+    // required by next - retrieves initial data without rendering component
+}
+
+renderCampaigns() {
+    const items = this.props.campaigns.map(address => {
+        return {
+            header: address,
+            description: <a>View Campaign</a>, 
+            fluid: true 
+            // fluid fills up width of container 
+        };
+    });
+
+    return <Card.Group item= {items} />;
 }
 
 render() {
-    return <div>Campaigns Index!</div>
+    return <div>{this.renderCampaigns()}</div>
     // prevents error message
 }
 }
