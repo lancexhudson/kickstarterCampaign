@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card } from 'semantic-ui-react';
+import { Card, Button } from 'semantic-ui-react';
 import factory from '../ethereum/factory';
 
 // export default () => {
@@ -28,8 +28,17 @@ renderCampaigns() {
 }
 
 render() {
-    return <div>{this.renderCampaigns()}</div>
-    // prevents error message
+    return (
+    <div>
+        <h3>Open Campaigns</h3>
+        {this.renderCampaigns()}
+    <Button 
+    content="Create Campaign"
+    icon="add circle"
+    primary /> 
+      {/* same as primary={true} */}
+    </div>
+    );
 }
 }
 
