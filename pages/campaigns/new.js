@@ -3,6 +3,8 @@ import { Form, Button, Input, Message } from 'semantic-ui-react';
 import Layout from '../../components/Layout';
 import factory from '../../ethereum/factory';
 import web3 from '../../ethereum/web3';
+import { Link, Router } from '../../routes';
+
 
 class CampaignNew extends Component { //state property
     state = {
@@ -18,10 +20,11 @@ event.preventDefault(); //keeps browser from attempting to submit form
 this.setState({ loading: true, errorMessage: '' });
 
 try {
-const accounts = await web3.eth.getAccounts();
-await factory.methods
-.createCampaign(this.state.minimumContribution)
-.send({ from: accounts[0] });
+    const accounts = await web3.eth.getAccounts();
+    await factory.methods
+    .createCampaign(this.state.minimumContribution)
+    .send({ from: accounts[0] });
+    Router.pushRoute('/'); // redirects user to index route
 } catch (err) {
 this.setState({ errorMessage: err.message });
 }
