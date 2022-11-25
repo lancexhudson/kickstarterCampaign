@@ -17,20 +17,17 @@ accounts = await web3.eth.getAccounts();
 
 factory = await new web3.eth.Contract(compiledFactory.abi)
 .deploy({ data: compiledFactory.evm.bytecode.object })
-.send({ from: accounts[0], gas: '1000000' });
+.send({ from: accounts[0], gas: '1500000' });
 
-await factory.methods.createCampaign('100').send({
+await factory.methods.createCampaign('100')
+.send({
    from: accounts[0],
    gas: '1000000' 
 });
 
 [campaignAddress] = await factory.methods.getDeployedCampaigns().call();
 // above returns first element to campaignAddress
-
- campaign = await new web3.eth.Contract
-    (compiledCampaign.abi,
-    campaignAddress
-    );
+campaign = await new web3.eth.Contract(compiledCampaign.abi,campaignAddress);
 });
 
 describe('Campaigns', () => {
